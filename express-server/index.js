@@ -44,7 +44,6 @@ app.get('/api/people/records/perpage/:perpage/page/:page', (req, res) => {
 app.get('/api/people/email/characters/frequency/perpage/:perpage/page/:page', (req, res) => {
     const api_url = 'https://api.salesloft.com/v2/people.json';
 
-    let metadata;
     let frequencyCharacters = new Map();
     let characters = [];
 
@@ -69,6 +68,47 @@ app.get('/api/people/email/characters/frequency/perpage/:perpage/page/:page', (r
                 frequencyCharacters.forEach((value, key) => characters.push({ character: key, frequency: value }));
                 characters.sort((a, b) => b.frequency - a.frequency);
                 res.send({ email_characters: characters });
+            });
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    getPeople(req.params.perpage, req.params.page);
+});
+
+app.get('/api/people/possible/duplicate/perpage/:perpage/page/:page', (req, res) => {
+    const api_url = 'https://api.salesloft.com/v2/people.json';
+
+    let possibleDuplicate = new Map();
+    let email = [];
+    let actualEmail;
+
+    const getPeople = (per_page, page) => {
+        try {
+            const a = axios.get(`${api_url}?include_paging_counts=true&per_page=${per_page}&page=${page}`, {
+                headers: {
+                    Authorization: `Bearer ${process.env.API_KEY}`
+                }
+            });
+            a.then(response => {
+                response.data.data.forEach(person => {
+                    actualEmail = person.email_address.toLocaleLowerCase();
+                    console.log(actualEmail);
+                    let actualEmailLength = possibleDuplicate.get(actualEmail.length)
+                    console.log(actualEmailLength);
+                    if (actualEmailLength !== undefined) {
+                        console.log(possibleDuplicate.get(actualEmailLength));
+                        possibleDuplicate.set(actualEmail.length, [...actualEmailLength, actualEmail]);
+                    } else {
+                        possibleDuplicate.set(actualEmail.length, [actualEmail]);
+                    }
+
+                });
+                console.log(possibleDuplicate);
+                possibleDuplicate.forEach((value, key) => email.push({ length: key, emailList: value }));
+                email.sort((a, b) => b.length - a.length);
+                res.send({ emailListAccordingEmailLength: email });
             });
         } catch (error) {
             console.error(error)
