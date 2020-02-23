@@ -1,5 +1,8 @@
 # salesloft-exercise
 SalesLoft Exercise
 
-## Runing backend server
+## Running backend server
 nodemon index.js
+
+### Running frontend
+ng serve
