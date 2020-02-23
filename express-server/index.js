@@ -66,10 +66,9 @@ app.get('/api/people/email/characters/frequency/perpage/:perpage/page/:page', (r
                         }
                     });
                 });
-                metadata = response.data.metadata;
                 frequencyCharacters.forEach((value, key) => characters.push({ character: key, frequency: value }));
                 characters.sort((a, b) => b.frequency - a.frequency);
-                res.send({ metadata: metadata, email_characters: characters });
+                res.send({ email_characters: characters });
             });
         } catch (error) {
             console.error(error)
