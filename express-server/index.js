@@ -94,18 +94,14 @@ app.get('/api/people/possible/duplicate/perpage/:perpage/page/:page', (req, res)
             a.then(response => {
                 response.data.data.forEach(person => {
                     actualEmail = person.email_address.toLocaleLowerCase();
-                    console.log(actualEmail);
                     let actualEmailLength = possibleDuplicate.get(actualEmail.length)
-                    console.log(actualEmailLength);
                     if (actualEmailLength !== undefined) {
-                        console.log(possibleDuplicate.get(actualEmailLength));
                         possibleDuplicate.set(actualEmail.length, [...actualEmailLength, actualEmail]);
                     } else {
                         possibleDuplicate.set(actualEmail.length, [actualEmail]);
                     }
 
                 });
-                console.log(possibleDuplicate);
                 possibleDuplicate.forEach((value, key) => email.push({ length: key, emailList: value }));
                 email.sort((a, b) => b.length - a.length);
                 res.send({ emailListAccordingEmailLength: email });
