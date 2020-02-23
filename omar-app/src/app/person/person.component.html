@@ -1,0 +1,73 @@
+<div class="mat-elevation-z8" style="margin: 20px;">
+    <!-- <div style="width: auto; background: white; overflow: hidden; padding: 20px 20px 0px;">
+        <div style="width: 20%; float: right;">
+            <button style="background-color: #016B8F; color: white; float: right; margin: 20px 0px 8px; height: 48px;"
+                (click)="openDialog()" mat-button>
+                Frequency Character Counter
+            </button>
+        </div>
+    </div> -->
+
+    <div style="padding:24px; display: flex; flex-direction: row; justify-content: space-between;" mat-dialog-actions>
+        <button
+            style="background-color: #016B8F; color: white; float: right; margin: 20px 0px 8px; height: 48px; cursor: pointer;"
+            mat-button (click)="possibleDuplicatePeople()">Possible Duplicate People</button>
+        <button
+            style="background-color: #016B8F; color: white; float: right; margin: 20px 0px 8px; height: 48px; cursor: pointer;"
+            mat-button (click)="openDialog()">Frequency Character Counter</button>
+    </div>
+
+    <div style="background: white; overflow: hidden; padding: 24px;">
+        <table mat-table [dataSource]="dataSource" style="width: 100%;">
+            <!-- ID Column -->
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef class="header_and_detail_padding">
+                    ID
+                </th>
+                <td mat-cell *matCellDef="let element" class="header_and_detail_padding">
+                    {{ element.id }}
+                </td>
+            </ng-container>
+
+            <!-- Person_name Column -->
+            <ng-container matColumnDef="person_name">
+                <th mat-header-cell *matHeaderCellDef class="header_and_detail_padding">
+                    Person Name
+                </th>
+                <td mat-cell *matCellDef="let element" class="header_and_detail_padding">
+                    {{ element.person_name }}
+                </td>
+            </ng-container>
+
+            <!-- Email Column -->
+            <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef class="header_and_detail_padding">
+                    Email
+                </th>
+                <td mat-cell *matCellDef="let element" class="header_and_detail_padding">
+                    {{ element.email }}
+                </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="job_title">
+                <th mat-header-cell *matHeaderCellDef class="header_and_detail_padding">
+                    Job Title
+                </th>
+                <td mat-cell *matCellDef="let element" class="header_and_detail_padding">
+                    {{ element.job_title }}
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+
+        <!-- <mat-paginator [pageSizeOptions]="pageSizeOptions" showFirstLastButtons style="margin-top: 16px;"
+            (page)="pageEvent = $event" [length]="length" (page)="changeUserList($event)">
+        </mat-paginator> -->
+        <mat-paginator [pageSizeOptions]="pageSizeOptions" showFirstLastButtons style="margin-top: 16px;"
+            (page)="pageEvent = $event" [length]="length" (page)="changePeopleList($event)">
+        </mat-paginator>
+    </div>
+</div>
