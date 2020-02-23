@@ -6,7 +6,7 @@ Open express-server folder in terminal and run the next command in order to star
 
 nodemon index.js
 
-### Running frontend
+## Running frontend
 Open omar-app folder in terminal and run the next command in order to start frontend side of the application:
 
 ng serve
