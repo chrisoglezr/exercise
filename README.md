@@ -1,4 +1,5 @@
 # salesloft-exercise
 SalesLoft Exercise
 
-## Run backend server
+## Runing backend server
+nodemon index.js
